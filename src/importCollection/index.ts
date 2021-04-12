@@ -186,7 +186,7 @@ async function truncateCollection(colRef: FirebaseFirestore.CollectionReference)
     await colRef.get().then(async (snap) => {
         for (let doc of snap.docs) {
             // recurse sub-collections
-            const subCollPaths = await doc.ref.getCollections();
+            const subCollPaths = await doc.ref.listCollections();
             for (let subColRef of subCollPaths) {
                 await truncateCollection(subColRef);
             }

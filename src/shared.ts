@@ -69,6 +69,16 @@ class FieldHandler {
     }
 }
 
+class StringFH extends FieldHandler {
+    isDecodeType = (key, val, doc) => {
+        return (typeof val === 'string');
+    };
+    encodeFn = (key: string, val, doc) => {
+        const {data} = val;                
+        return `${data}`;
+    };
+}
+
 class GeoPointFH extends FieldHandler {
     isDecodeType = (key: string, val, doc)  => {
         return (val instanceof admin.firestore.GeoPoint);
@@ -192,6 +202,7 @@ const specialFieldTypes: FieldHandler[] = [
     // new TestFH('test'),
     new GeoPointFH('geopoint'),
     new BooleanFH('bool'),
+    new StringFH('string'),
     new TimeStampFH('timestamp'),
     new NumberFH('number'),
     new ReferenceFH('ref'),

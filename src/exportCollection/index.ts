@@ -17,7 +17,7 @@ export const execute = async (file: string, collectionPaths: string[], options) 
     // If no collection arguments, select all root collections
     if (collectionPaths.length === 0) {
         console.log('Selecting root collections...');
-        collectionPaths = await db.getCollections().then(colls => colls.map(coll => coll.path));    
+        collectionPaths = await db.listCollections().then(colls => colls.map(coll => coll.path));    
     }
     
     console.log('Getting selected collections...');
@@ -92,7 +92,7 @@ function getCollection(path): Promise<any> {
 
                 // process sub-collections
                 if (args.subcolls) {
-                    const subCollPaths = await snap.ref.getCollections().then(colls => colls.map(coll => coll.path));
+                    const subCollPaths = await snap.ref.listCollections().then(colls => colls.map(coll => coll.path));
                     if (subCollPaths.length) {
                         const subCollections = await getCollections(subCollPaths);
                         _.assign(doc[snap.id], subCollections);
